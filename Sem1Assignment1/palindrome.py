@@ -52,7 +52,7 @@ class Queue:
             temp = temp.next
 
 def recursive_palindrome_check(word):
-    if len(word) == 1:
+    if len(word) == 1 or len(word) == 0:
         return True
     first_letter = word[0]
     last_letter = word[len(word) -1]
@@ -75,7 +75,7 @@ with open('inputPS15.txt', 'r') as reader:
         # remove punctuation
         cleaned_line = re.sub(r'[^\w\s]', '', line)
         for word in cleaned_line.split():
-            input_queue.enqueue(word)
+            input_queue.enqueue(word.strip())
 
 input_queue.printQueue("input")
 # iterate over input queue
