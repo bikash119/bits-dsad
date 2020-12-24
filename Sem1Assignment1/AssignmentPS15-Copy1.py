@@ -27,10 +27,10 @@ class LLNode(object):
             [charQueueLL_Q2.queueEnq(ch) for ch in lower_word ]
             
             #add characters of reversed word to the queue dataQueueLL_Q3
-            reversed_word = word.data[::-1]
+            reversed_word = lower_word[::-1]
             [charQueueLL_Q3.queueEnq(ch) for ch in reversed_word ]
             char_queue_size = charQueueLL_Q2.getSize()
-            while (char_queue_size > 1):
+            while (char_queue_size >= 1):
                 if (charQueueLL_Q2.queueDeq() != charQueueLL_Q3.queueDeq()):
                     return False
                 char_queue_size = char_queue_size -1
@@ -57,7 +57,7 @@ class QueueLinkedList(object):
                 if(cur_node.is_wordPalindrome()):
                     queueSize=queueSize-1
                     if(self.queueDeq() is not None):
-                        self.queueEnq1(cur_node.data)
+                        self.queueEnq(cur_node.data)
                         cur_node = cur_node.next                    
                 else:
                     if(self.queueDeq() is not None):
@@ -105,21 +105,10 @@ class QueueLinkedList(object):
             self.head = new_node
             self.tail = new_node
         else:
-            print(self.tail.data)
             self.tail.next=new_node
             self.tail=new_node
         return self
-    
-    def queueEnq1(self, data):
-        new_node = LLNode(data)
-        # checks if any nodes exists and if none assign new node to head node
-        if(self.head is None and self.tail is None):
-            self.head = new_node
-            self.tail = new_node
-        else:
-            self.tail.next=new_node
-            self.tail=new_node
-        return self
+
     
     # Prints the queue linked list
     def printQueueList(self):
@@ -136,8 +125,9 @@ class QueueLinkedList(object):
             print("Node is empty, Nothing can be deleted")
             return None
         else:
+            curr_data = cur_node.data
             self.head = cur_node.next
-            return cur_node
+            return curr_data
         
     
     # load input data from File
