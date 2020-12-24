@@ -1,11 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[56]:
-
-
 import os.path
 import string
+import sys
 
 # Node Class with constructor and is_wordPalindrome methods
 # is_wordPalindrome method takes each word in queue, converts to String and returns true/false if its palindrome
@@ -200,21 +195,6 @@ class MainFunction():
     except: #catch *all* exceptions
         e = sys.exc_info()[0]
         print("<p>Error: %s</p>" % e )
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 
