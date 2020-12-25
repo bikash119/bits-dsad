@@ -3,25 +3,26 @@ import string
 import sys
 
 # Node Class with constructor and is_wordPalindrome methods
-# is_wordPalindrome method takes each word in queue, converts to String and returns true/false if its palindrome
+# is_wordPalindrome method takes single word in the queue, creates 2 additional queues, one queue contains 
+# chars in reverse, with each dequeue of char, comparison happens and returns true/false if its palindrome
 class LLNode(object):
     def __init__(self, data):
         self.data = data
         self.next = None
         
-    def is_wordPalindrome(word): #aaaaa
+    def is_wordPalindrome(word):
         if(word.data is None):
             print("Node in LL is empty")
             return False 
         else:
             lower_word = word.data.lower()
-            # create Queue instance
+            # create Queue instances for holding word in characters
             charQueueLL_Q2 = QueueLinkedList() 
             charQueueLL_Q3 = QueueLinkedList() 
-            #add characters of word to the queue dataQueueLL_Q2
+            #add characters of word to the queue charQueueLL_Q2
             [charQueueLL_Q2.queueEnq(ch) for ch in lower_word ]
             
-            #add characters of reversed word to the queue dataQueueLL_Q3
+            #add characters of reversed word to the queue charQueueLL_Q3
             reversed_word = lower_word[::-1]
             [charQueueLL_Q3.queueEnq(ch) for ch in reversed_word ]
             char_queue_size = charQueueLL_Q2.getSize()
@@ -40,7 +41,8 @@ class QueueLinkedList(object):
         self.head = None
         self.tail = None
         
-    #checkPalindrome method checks if each word in queue is palindrome or not. If yes, inserts at rear end of queue
+    # checkPalindrome method checks if each word in queue is palindrome or not. If yes, deletes the word from 
+    # front of the queue and inserts at rear end of queue
     def checkPalindrome(self): 
         cur_node = self.head
         queueSize=self.getSize()
@@ -61,7 +63,7 @@ class QueueLinkedList(object):
 
                 
     
-    # size of the queue as it traverses the queue-O(n)                      
+    # Finds the size of the queue as it traverses the queue-O(n)                      
     def getSize(self):
         count=0
         cur_node=self.head
@@ -69,19 +71,8 @@ class QueueLinkedList(object):
             count=count+1
             cur_node = cur_node.next
         return count
-    
-    def list_reverse(self):
-        prev_node = None 
-        cur_node = self.head
-        next_node=self.head
-        while cur_node:
-            next_node = next_node.next
-            cur_node.next = prev_node
-            prev_node=cur_node
-            cur_node=next_node
-        self.head = prev_node 
-    
-    # Converts queue to String for output
+       
+    # Converts queue data to String for output file
     def queueToString(self):
         cur_node = self.head
         LLString=""
@@ -113,7 +104,7 @@ class QueueLinkedList(object):
         while cur_node:
             cur_node = cur_node.next
     
-    # Removes the word from the front end of the queue      
+    # Removes the word from the front end of the queue and returns the deleted data value     
     def queueDeq(self):
         cur_node = self.head
         if(self.head is None and self.tail is None):
@@ -122,10 +113,11 @@ class QueueLinkedList(object):
         else:
             curr_data = cur_node.data
             self.head = cur_node.next
+            cur_node=None
             return curr_data
         
     
-    # load input data from File
+    # Reads the input data from the File given as argument and returns the data as string
     def loadDataFromFile(self,fname):
         if(os.path.exists(fname)):
             with open(fname,"r") as rf:
@@ -144,7 +136,7 @@ class QueueLinkedList(object):
         stripStringList= [w.translate(table) for w in dataStringList]
         return stripStringList
     
-    # write palindrome queue data to file
+    # write palindrome queue data to the ouput file
     def writeDataToFile(self,fname,data):
         with open(fname,"w") as wf: 
             if(len(data)>0):
@@ -169,8 +161,9 @@ class MainFunction():
             inDataString=dataQueueLL_Q1.loadDataFromFile(fname)
 
             if(inDataString is not None):
-                dataStringList=dataQueueLL_Q1.processInputDataString(inDataString) 
-                print(dataStringList)
+                dataStringList=dataQueueLL_Q1.processInputDataString(inDataString)
+            
+                # print(dataStringList)
                 # Append input string to queue
                 for eachWord in dataStringList:
                     dataQueueLL_Q1.queueEnq(eachWord)
@@ -187,15 +180,11 @@ class MainFunction():
                 if(writeSuccess):
                     print("Palindrome data Successfully Written To File")
                 else:
-                    print("Palindrome data is not written, No Palindrome data or error occurred")
+                    print("Unable to write Palindrome data to the File, No Palindrome data or error occurred")
 
             else:
-                print("No Data Exists in the file, Place the data file and re-run the program") 
-
+                print("No File/Data Exists, Place the file with the data and re-run the program") 
+                
     except: #catch *all* exceptions
         e = sys.exc_info()[0]
         print("<p>Error: %s</p>" % e )
-
-
-
-
